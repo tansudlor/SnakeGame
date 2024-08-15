@@ -46,5 +46,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SnakePartPrefab: {fileID: 5680838597671494051, guid: d92c1aa8693227f488c0b870af17592f, type: 3}
   FoodPrefab: {fileID: 1386320209160959416, guid: 0520a24f8689c424682074d5a0d3756f, type: 3}
+  speed: 1
   usedArea: []
   unuseArea: []

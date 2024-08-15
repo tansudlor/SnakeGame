@@ -14,10 +14,7 @@ public class Snake : MonoBehaviour
 
     private Dictionary<Vector2, object> hashMap = new Dictionary<Vector2, object>();
     public float speed = 1f;
-    private int countAddSpeed = 0;
     private int BodyCount = 1;
-    private int Count = 1;
-    private Vector2 prvBlock;
     private Vector3 position;
 
     private GameController gameController;
@@ -115,7 +112,7 @@ public class Snake : MonoBehaviour
 
             if (hashMap[currentBlock].GetType() == typeof(Tail))
             {
-
+                Time.timeScale = 0;
                 Debug.Log("Die");
             }
             else if (hashMap[currentBlock].GetType() == typeof(Food))
@@ -125,15 +122,12 @@ public class Snake : MonoBehaviour
                 CreateTail(currentBlock, speed * BodyCount);
                 SpawnFood();
                 BodyCount++;
-
-
+                
 
             }
         }
        
-
-        //prvBlock = currentBlock;
-        Debug.Log("BodyCount " + BodyCount);
+        //Debug.Log("BodyCount " + BodyCount);
 
     }
 
