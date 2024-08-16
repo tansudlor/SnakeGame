@@ -1,7 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.SocialPlatforms.Impl;
 using UnityEngine.UIElements;
 using static Unity.Collections.AllocatorManager;
 using static UnityEditor.PlayerSettings;
@@ -10,6 +13,10 @@ public class Snake : MonoBehaviour
 {
     public GameObject SnakePartPrefab;
     public GameObject FoodPrefab;
+    public GameObject GameOver;
+    public TextMeshProUGUI ScoreText;
+
+    private int score = 0;
     private Vector3 direction = Vector3.right;
 
     private Dictionary<Vector2, object> hashMap = new Dictionary<Vector2, object>();
@@ -29,6 +36,7 @@ public class Snake : MonoBehaviour
         gameController.HashMap = hashMap;
         gameController.UnuseArea = unuseArea;
         gameController.UsedArea = usedArea;
+        Time.timeScale = 1;
         direction = Vector2.up;
         position = Vector2.zero;
         for (int i = -16; i <= 15; i++)//X Pos
@@ -113,6 +121,7 @@ public class Snake : MonoBehaviour
             if (hashMap[currentBlock].GetType() == typeof(Tail))
             {
                 Time.timeScale = 0;
+                GameOver.SetActive(true);
                 Debug.Log("Die");
             }
             else if (hashMap[currentBlock].GetType() == typeof(Food))
@@ -121,13 +130,28 @@ public class Snake : MonoBehaviour
                 DestoryFood(currentBlock);
                 CreateTail(currentBlock, speed * BodyCount);
                 SpawnFood();
+                score++;
+                ScoreText.text = "Score : " + score.ToString();
                 BodyCount++;
-                
+
+                if (speed > 0.1f)
+                {
+                    speed -= 0.1f;
+                }
+                else if (speed > 0.05f)
+                {
+                    speed -= 0.01f;
+                }
+
+                if (speed < 0.05f)
+                {
+                    speed = 0.05f;
+                }
 
             }
         }
        
-        //Debug.Log("BodyCount " + BodyCount);
+        
 
     }
 
@@ -160,6 +184,18 @@ public class Snake : MonoBehaviour
 
         var food = Instantiate(FoodPrefab, usePos, Quaternion.identity).GetComponent<Food>();
         hashMap[usePos] = food;
+    }
+
+    public void ResetGame()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        
+    }
+
+    public void QuitGame()
+    {
+       Application.Quit();
+
     }
 
 }
