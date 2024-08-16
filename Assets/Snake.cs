@@ -4,10 +4,7 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.SocialPlatforms.Impl;
-using UnityEngine.UIElements;
-using static Unity.Collections.AllocatorManager;
-using static UnityEditor.PlayerSettings;
+
 
 public class Snake : MonoBehaviour
 {
